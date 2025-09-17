@@ -3,7 +3,7 @@ from appium.webdriver.common.appiumby import AppiumBy
 from ai_mate_tests.pages.base_page import BasePage
 
 
-#from pages.base_page import BasePage
+
 
 class WelcomePage(BasePage):
 

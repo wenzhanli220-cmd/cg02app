@@ -5,9 +5,7 @@ from ai_mate_tests.pages.device_page import DevicePage
 from ai_mate_tests.pages.welcome_page import WelcomePage
 
 
-# from drivers.appium_driver import get_driver
-# from pages.welcome_page import WelcomePage
-# from pages.device_page import DevicePage
+
 
 @pytest.fixture(scope="function")
 def driver():
