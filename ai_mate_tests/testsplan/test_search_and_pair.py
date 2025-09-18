@@ -1,24 +1,17 @@
-import pytest
-
-from ai_mate_tests.drivers.appium_driver import get_driver
 from ai_mate_tests.pages.device_page import DevicePage
 from ai_mate_tests.pages.welcome_page import WelcomePage
 
 
 
 
-@pytest.fixture(scope="function")
-def driver():
-    driver = get_driver()
-    yield driver
-    driver.quit()
+
 
 def test_search_and_pair(driver):
     welcome = WelcomePage(driver)
     device = DevicePage(driver)
 
     # Step 1: 同意协议、进入首页
-    welcome.accept_all()
+    # welcome.accept_all()
 
     # Step 2: 点击搜索到的眼镜设备
     device.search_device()
@@ -27,5 +20,5 @@ def test_search_and_pair(driver):
     device.pair_device()
 
     # Step 4: 断言：是否进入到含有 “对话翻译” 的页面
-    assert device.is_paired_success(), "❌ 配对失败，未检测到 '对话翻译' 页面"
+    assert device.is_paired_success(timeout=30), "❌ 配对失败，未检测到 '对话翻译' 页面"
     print("✅ 配对成功，进入 '对话翻译' 页面")

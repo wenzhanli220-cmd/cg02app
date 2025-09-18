@@ -1,16 +1,18 @@
 from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 
 from ai_mate_tests.pages.base_page import BasePage
-
 
 
 class DevicePage(BasePage):
 
     DEVICE_ITEM = (AppiumBy.XPATH, '//android.widget.ImageView[@content-desc="Infinix AI Glasses"]')
     PAIR_BUTTON = (AppiumBy.XPATH, '//android.widget.Button[@resource-id="com.transsion.settings.bluetooth:id/btn_positive"]')
-    DIALOG_TRANSLATE_TEXT = (AppiumBy.ANDROID_UIAUTOMATOR, 'new UiSelector().text("对话翻译")')
+    SUCCESS_TEXTS = [
+        (AppiumBy.ACCESSIBILITY_ID, "对话翻译"),
+        (AppiumBy.XPATH, '//android.widget.ImageView[@content-desc="对话翻译"]')
+    ]
 
     def search_device(self):
         self.click(*self.DEVICE_ITEM)
@@ -19,13 +21,11 @@ class DevicePage(BasePage):
         self.click(*self.PAIR_BUTTON)
 
     def is_paired_success(self, timeout=10):
-        """
-        等待 '对话翻译' 文本出现，表示配对成功并跳转页面
-        """
+        """等待首页出现 '对话翻译' 或 '现场听译'"""
         try:
             WebDriverWait(self.driver, timeout).until(
-                EC.presence_of_element_located(self.DIALOG_TRANSLATE_TEXT)
+                lambda d: any(d.find_elements(*locator) for locator in self.SUCCESS_TEXTS)
             )
             return True
-        except:
+        except TimeoutException:
             return False
