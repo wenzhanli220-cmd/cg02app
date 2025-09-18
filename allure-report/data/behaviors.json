@@ -1,1 +1,1 @@
-{"uid":"b1a8273437954620fa374b796ffaacdd","name":"behaviors","children":[]}
+{"uid":"b1a8273437954620fa374b796ffaacdd","name":"behaviors","children":[{"name":"test_search_and_pair","uid":"12f0baae32e1c8f1","parentUid":"b1a8273437954620fa374b796ffaacdd","status":"broken","time":{"start":1758188133993,"stop":1758188144187,"duration":10194},"flaky":false,"newFailed":false,"newPassed":false,"newBroken":false,"retriesCount":1,"retriesStatusChange":false,"parameters":[],"tags":[]}]}
