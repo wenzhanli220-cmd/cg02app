@@ -1,2 +1,2 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","10194","test_search_and_pair","ai_mate_tests.testsplan","2025-09-18","broken","2025-09-18","","test_search_and_pair","",""
+"","8197","test_search_and_pair","ai_mate_tests.testsplan","2025-09-22","passed","2025-09-22","","test_search_and_pair","",""

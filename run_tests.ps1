@@ -1,7 +1,12 @@
-# -------------------------------
+﻿# -------------------------------
 # 一键执行 pytest + allure 报告
 # 保存文件名：run_tests.ps1
 # -------------------------------
+
+# 强制使用 UTF-8 编码（解决中文乱码问题）
+chcp 65001 > $null
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$OutputEncoding = [System.Text.Encoding]::UTF8
 
 # 1. 运行 pytest，生成 allure-results
 Write-Host "▶️ 开始运行测试..."
@@ -31,3 +36,4 @@ Compress-Archive -Path "allure-report\*" -DestinationPath $zipName -Force
 Write-Host "🎉 全流程完成！"
 Write-Host "报告路径：allure-report\index.html"
 Write-Host "压缩包：$zipName"
+

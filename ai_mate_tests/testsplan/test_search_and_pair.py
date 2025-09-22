@@ -1,4 +1,5 @@
 from ai_mate_tests.pages.device_page import DevicePage
+from ai_mate_tests.pages.popup_page import  PopupPage
 from ai_mate_tests.pages.welcome_page import WelcomePage
 
 
@@ -9,9 +10,12 @@ from ai_mate_tests.pages.welcome_page import WelcomePage
 def test_search_and_pair(driver):
     welcome = WelcomePage(driver)
     device = DevicePage(driver)
+    popup = PopupPage(driver)
 
     # Step 1: 同意协议、进入首页
     # welcome.accept_all()
+
+    popup.handle_interference_popup()
 
     # Step 2: 点击搜索到的眼镜设备
     device.search_device()

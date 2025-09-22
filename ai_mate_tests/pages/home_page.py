@@ -1,5 +1,7 @@
 from appium.webdriver.common.appiumby import AppiumBy
-from pages.base_page import BasePage
+
+from ai_mate_tests.pages.base_page import BasePage
+
 
 class HomePage(BasePage):
 
