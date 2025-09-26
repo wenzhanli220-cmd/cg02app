@@ -1,17 +1,17 @@
 import allure
 import pytest
+from typing import Generator
+from appium.webdriver.webdriver import WebDriver
 
 from ai_mate_tests.drivers.appium_driver import get_driver
 
 
 @pytest.fixture(scope="function")
-def driver():
+def driver() -> Generator[WebDriver, None, None]:
     """初始化和关闭 driver，每个测试方法独立运行"""
     driver = get_driver()
     yield driver
     driver.quit()
-
-
 
 
 @pytest.hookimpl(hookwrapper=True, tryfirst=True)

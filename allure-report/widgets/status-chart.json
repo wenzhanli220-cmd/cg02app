@@ -1,1 +1,1 @@
-[{"uid":"598643681952f2bb","name":"test_search_and_pair","time":{"start":1758503858239,"stop":1758503866436,"duration":8197},"status":"passed","severity":"normal"}]
+[{"uid":"abf3d50cc09cc4e0","name":"test_search_and_pair","time":{"start":1758591894141,"stop":1758591918590,"duration":24449},"status":"broken","severity":"normal"},{"uid":"fd83b25ebecdc21b","name":"test_open_bluetooth","time":{"start":1758591868966,"stop":1758591882801,"duration":13835},"status":"broken","severity":"normal"}]

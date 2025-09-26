@@ -1,27 +1,29 @@
 from appium import webdriver
 from appium.options.android import UiAutomator2Options
+from ai_mate_tests.utils.config import APPIUM_SERVER_URL, DEVICE_CONFIG, APP_CONFIGS, DRIVER_OPTIONS
 
-def get_driver():
+def get_driver(app_name="ai_mate"):
+    """
+    获取 driver
+    :param app_name: "ai_mate" 或 "settings"
+    """
     options = UiAutomator2Options()
 
     # 基础配置
-    options.platform_name = "Android"
-    options.platform_version = "15"  
-    options.device_name = "13826704BL00043"
+    options.platform_name = DEVICE_CONFIG["platformName"]
+    options.platform_version = DEVICE_CONFIG["platformVersion"]
+    options.device_name = DEVICE_CONFIG["deviceName"]
+    options.automation_name = DEVICE_CONFIG["automationName"]
 
-    # 启动目标应用
-    options.app_package = "com.transsion.xsound"
-    options.app_activity = "com.transsion.xsound.MainActivity"
+    # 选择启动的 APP
+    app_config = APP_CONFIGS[app_name]
+    options.app_package = app_config["appPackage"]
+    options.app_activity = app_config["appActivity"]
 
-    # 优化参数
-    options.automation_name = "UiAutomator2"
-    options.no_reset = True
-    options.full_reset = False
-    options.new_command_timeout = 300
-    options.auto_grant_permissions = True
-    options.unicode_keyboard = True
-    options.reset_keyboard = True
+    # 其他配置
+    for key, value in DRIVER_OPTIONS.items():
+        setattr(options, key, value)
 
-    driver = webdriver.Remote("http://localhost:4723/wd/hub", options=options)
-    driver.implicitly_wait(10)  # 全局隐式等待
+    driver = webdriver.Remote(APPIUM_SERVER_URL, options=options)
+    driver.implicitly_wait(10)
     return driver

@@ -1,5 +1,5 @@
 from appium.webdriver.common.appiumby import AppiumBy
-from selenium.common.exceptions import TimeoutException
+
 
 from ai_mate_tests.pages.base_page import BasePage
 
