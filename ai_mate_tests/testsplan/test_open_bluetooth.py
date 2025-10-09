@@ -4,7 +4,7 @@ from ai_mate_tests.pages.settings_page import SettingsPage
 from ai_mate_tests.drivers.appium_driver import get_driver
 
 @pytest.fixture(scope="function")
-def settings_driver():
+def settings_driver(driver):
     driver = get_driver("settings")
     yield driver
     driver.quit()
