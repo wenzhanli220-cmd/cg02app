@@ -1,15 +1,14 @@
+
+
 from ai_mate_tests.pages.device_page import DevicePage
 from ai_mate_tests.pages.popup_page import  PopupPage
 from ai_mate_tests.pages.welcome_page import WelcomePage
 
 
-
-
-
-def test_search_and_pair(driver):
-    welcome = WelcomePage(driver)
-    device = DevicePage(driver)
-    popup = PopupPage(driver)
+def test_search_and_pair(ai_mate_driver):
+    welcome = WelcomePage(ai_mate_driver)
+    device = DevicePage(ai_mate_driver)
+    popup = PopupPage(ai_mate_driver)
 
     # Step 1:弹窗处理
     popup.handle_interference_popup()

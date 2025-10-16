@@ -1,5 +1,7 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","24449","test_search_and_pair","ai_mate_tests.testsplan","2025-09-23","broken","2025-09-23","","test_search_and_pair","",""
+"","24738","test_search_and_pair","ai_mate_tests.testsplan","2025-10-16","broken","2025-10-16","","test_search_and_pair","",""
 "
-打开设置 → 进入蓝牙 → 打开蓝牙开关 → 检查是否有已配对设备已连接
-","13835","test_open_bluetooth","ai_mate_tests.testsplan","2025-09-23","broken","2025-09-23","","test_open_bluetooth","",""
+打开设置 → 进入蓝牙 → 进行 5 次开关蓝牙稳定性测试
+
+测试过程中自动处理可能出现的干扰弹窗
+","56498","test_open_bluetooth","ai_mate_tests.testsplan","2025-10-16","passed","2025-10-16","","test_open_bluetooth","",""

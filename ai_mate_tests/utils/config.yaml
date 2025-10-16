@@ -1,0 +1,150 @@
+# config/config.yaml
+
+# Appium 服务配置
+appium_servers:
+  device1: "http://localhost:4723/wd/hub"
+  device2: "http://localhost:4725/wd/hub"
+
+# 设备配置（每个设备包含自己的元素定位）
+devices:
+  device1:
+    udid: "1467253AU000413"
+    appium_server_url: "http://localhost:4723/wd/hub"
+    platform_name: "Android"
+    platform_version: "15"
+    device_name: "device1"
+    automation_name: "UiAutomator2"
+    uiautomator2_server_launch_timeout: 60000
+    uiautomator2_server_install_timeout: 60000
+    app_wait_activity: "com.transsion.xsound.MainActivity"
+    app_wait_duration: 60000
+
+    # 设备1的元素定位
+    elements:
+      welcome_page:
+        agree_protocol:
+          by: "xpath"
+          value: '//android.widget.FrameLayout[@resource-id="android:id/content"]/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.widget.ImageView[2]'
+        use_now:
+          by: "accessibility_id"
+          value: "立即使用"
+        allow:
+          by: "android_uiautomator"
+          value: 'new UiSelector().text("允许")'
+
+      popup_page:
+        popup_button:
+          by: "class_name"
+          value: "android.widget.Button"
+        popup_close_coords:
+          x: 951
+          y: 1012
+
+      home_page:
+        add_device:
+          by: "accessibility_id"
+          value: "添加设备"
+
+      device_page:
+        device_item:
+          by: "xpath"
+          value: '//android.widget.ImageView[@content-desc="Infinix AI Glasses"]'
+        pair_button:
+          by: "xpath"
+          value: '//android.widget.Button[@resource-id="com.transsion.settings.bluetooth:id/btn_positive"]'
+        success_texts:
+          - by: "accessibility_id"
+            value: "对话翻译"
+          - by: "xpath"
+            value: '//android.widget.ImageView[@content-desc="对话翻译"]'
+
+      settings_page:
+        bluetooth_option:
+          by: "xpath"
+          value: "//android.widget.TextView[@resource-id='android:id/title' and @text='蓝牙']"
+        bluetooth_switch:
+          by: "class_name"
+          value: "android.widget.Switch"
+        paired_device_connected:
+          by: "xpath"
+          value: "//android.widget.TextView[@resource-id='android:id/summary' and contains(@text,'使用中，电池电量')]"
+
+  device2:
+    udid: "127.0.0.1:7555"
+    appium_server_url: "http://localhost:4725/wd/hub"
+    platform_name: "Android"
+    platform_version: "12"
+    device_name: "device2"
+    automation_name: "UiAutomator2"
+    uiautomator2_server_launch_timeout: 60000
+    uiautomator2_server_install_timeout: 60000
+    app_wait_activity: "com.transsion.xsound.MainActivity"
+    app_wait_duration: 60000
+
+    # 设备2的元素定位
+    elements:
+      welcome_page:
+        agree_protocol:
+          by: "xpath"
+          value: '//android.widget.FrameLayout[@resource-id="android:id/content"]/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.widget.ImageView[2]'
+        use_now:
+          by: "accessibility_id"
+          value: "立即使用"
+        allow:
+          by: "android_uiautomator"
+          value: 'new UiSelector().text("允许")'
+
+      popup_page:
+        popup_button:
+          by: "class_name"
+          value: "android.widget.Button"
+        popup_close_coords:
+          x: 951
+          y: 1012
+
+      home_page:
+        add_device:
+          by: "accessibility_id"
+          value: "添加设备"
+
+      device_page:
+        device_item:
+          by: "xpath"
+          value: '//android.widget.ImageView[@content-desc="Infinix AI Glasses"]'
+        pair_button:
+          by: "xpath"
+          value: '//android.widget.Button[@resource-id="com.transsion.settings.bluetooth:id/btn_positive"]'
+        success_texts:
+          - by: "accessibility_id"
+            value: "对话翻译"
+          - by: "xpath"
+            value: '//android.widget.ImageView[@content-desc="对话翻译"]'
+
+      settings_page:
+        bluetooth_option:
+          by: "xpath"
+          value: "//android.widget.TextView[@resource-id='android:id/title' and @text='蓝牙']"
+        bluetooth_switch:
+          by: "class_name"
+          value: "android.widget.Switch"
+        paired_device_connected:
+          by: "xpath"
+          value: "//android.widget.TextView[@resource-id='android:id/summary' and contains(@text,'使用中，电池电量')]"
+
+# 应用配置
+app_configs:
+  ai_mate:
+    app_package: "com.transsion.xsound"
+    app_activity: "com.transsion.xsound.MainActivity"
+  settings:
+    app_package: "com.android.settings"
+    app_activity: "com.android.settings.Settings"
+
+# 驱动配置选项
+driver_options:
+  no_reset: true
+  full_reset: false
+  new_command_timeout: 60
+  auto_grant_permissions: true
+  unicode_keyboard: true
+  reset_keyboard: true

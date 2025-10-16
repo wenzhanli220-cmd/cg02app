@@ -33,8 +33,8 @@ def log_serial(port, name):
         print(f"❌ 打开 {port} ({name}) 失败: {e}")
 
 if __name__ == "__main__":
-    # 开两个线程分别监听 COM11 和 COM12
-    t1 = threading.Thread(target=log_serial, args=("COM11", "left_leg"))
+    # 开两个线程分别监听 COM12 和 COM13
+    t1 = threading.Thread(target=log_serial, args=("COM14", "left_leg"))
     t2 = threading.Thread(target=log_serial, args=("COM12", "right_leg"))
 
     t1.start()

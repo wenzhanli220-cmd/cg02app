@@ -1,33 +1,35 @@
 import allure
 import pytest
-from typing import Generator
-from appium.webdriver.webdriver import WebDriver
+
 
 from ai_mate_tests.drivers.appium_driver import get_driver
 
 
 @pytest.fixture(scope="function")
-def driver() -> Generator[WebDriver, None, None]:
-    """初始化和关闭 driver，每个测试方法独立运行"""
-    driver = get_driver()
+def settings_driver():
+    driver = get_driver("settings")
     yield driver
     driver.quit()
 
+# 定义 ai_mate 驱动的 Fixture（假设另一个用例需要）
+@pytest.fixture(scope="function")
+def ai_mate_driver():
+    driver = get_driver("ai_mate")
+    yield driver
+    driver.quit()
 
 @pytest.hookimpl(hookwrapper=True, tryfirst=True)
 def pytest_runtest_makereport(item, call):
-    """
-    每个阶段都截图：
-    - setup 阶段
-    - call 阶段（用例执行）
-    - teardown 阶段
-    """
     outcome = yield
     report = outcome.get_result()
 
-    driver = item.funcargs.get("driver", None)
+    driver = (
+        item.funcargs.get("driver")
+        or item.funcargs.get("settings_driver")
+        or item.funcargs.get("ai_mate_driver")
+    )
+
     if driver:
-        # 生成附件名：用例名 + 阶段
         name = f"{report.nodeid}_{report.when}"
         screenshot = driver.get_screenshot_as_png()
         allure.attach(
