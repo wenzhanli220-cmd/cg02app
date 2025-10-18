@@ -1,4 +1,4 @@
-# config/config.yaml
+# utils/config.yaml
 
 # Appium 服务配置
 appium_servers:
@@ -8,7 +8,7 @@ appium_servers:
 # 设备配置（每个设备包含自己的元素定位）
 devices:
   device1:
-    udid: "1467253AU000413"
+    udid: "11467253AU000413"
     appium_server_url: "http://localhost:4723/wd/hub"
     platform_name: "Android"
     platform_version: "15"

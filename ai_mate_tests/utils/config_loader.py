@@ -70,23 +70,42 @@ class ConfigLoader:
         return devices[device_name].copy()
 
     def get_device_capabilities(self, device_name: str) -> Dict[str, Any]:
-        """获取指定设备的驱动能力配置"""
+        """获取指定设备的驱动能力配置 - 修复：返回驼峰命名法"""
         device_config = self.get_device_config(device_name)
 
-        # 合并应用配置
+        # 将下划线命名法转换为驼峰命名法
+        capabilities = {}
+
+        # 基础设备配置 - 转换为驼峰命名法
+        capabilities['platformName'] = device_config.get('platform_name')
+        capabilities['platformVersion'] = device_config.get('platform_version')
+        capabilities['deviceName'] = device_config.get('device_name')
+        capabilities['automationName'] = device_config.get('automation_name')
+        capabilities['udid'] = device_config.get('udid')
+        capabilities['appWaitActivity'] = device_config.get('app_wait_activity')
+        capabilities['appWaitDuration'] = device_config.get('app_wait_duration')
+        capabilities['uiautomator2ServerLaunchTimeout'] = device_config.get('uiautomator2_server_launch_timeout')
+        capabilities['uiautomator2ServerInstallTimeout'] = device_config.get('uiautomator2_server_install_timeout')
+
+        # 应用配置
         app_configs = self.config.get('app_configs', {})
+        default_app = app_configs.get('ai_mate', {})
+        capabilities['appPackage'] = default_app.get('app_package')
+        capabilities['appActivity'] = default_app.get('app_activity')
+
+        # 驱动选项
         driver_options = self.config.get('driver_options', {})
+        for key, value in driver_options.items():
+            camel_key = self._to_camel_case(key)
+            capabilities[camel_key] = value
 
-        # 设置默认应用配置
-        if 'app_package' not in device_config:
-            device_config['appPackage'] = app_configs.get('ai_mate', {}).get('app_package')
-        if 'app_activity' not in device_config:
-            device_config['appActivity'] = app_configs.get('ai_mate', {}).get('app_activity')
+        # 过滤掉 None 值
+        return {k: v for k, v in capabilities.items() if v is not None}
 
-        # 合并驱动选项
-        device_config.update(driver_options)
-
-        return device_config
+    def _to_camel_case(self, snake_str):
+        """将下划线命名法转换为驼峰命名法"""
+        components = snake_str.split('_')
+        return components[0] + ''.join(x.title() for x in components[1:])
 
     def get_appium_server_url(self, device_name: str) -> str:
         """获取指定设备的Appium服务器URL"""

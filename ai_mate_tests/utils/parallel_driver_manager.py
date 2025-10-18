@@ -189,7 +189,8 @@ class ParallelDriverManager:
         self.set_test_context(device_name, 'end_time', self._get_current_time())
         logger.info(f"设备 {device_name}: 测试结束，状态: {status}")
 
-    def _get_current_time(self):
+    @staticmethod
+    def _get_current_time():
         """获取当前时间字符串"""
         return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 

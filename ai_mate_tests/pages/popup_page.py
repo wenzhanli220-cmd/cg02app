@@ -1,7 +1,6 @@
 # pages/popup_page.py
 from appium.webdriver.common.touch_action import TouchAction
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from ai_mate_tests.pages.base_page import BasePage
 
@@ -55,7 +54,7 @@ class PopupPage(BasePage):
 
         return False
 
-    def is_popup_displayed(self, timeout=2):
+    def is_popup_displayed(self):
         """检查是否显示弹窗"""
         try:
             return self.is_displayed_by_config("popup_button")

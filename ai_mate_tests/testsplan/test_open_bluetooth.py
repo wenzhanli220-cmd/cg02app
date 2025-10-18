@@ -6,7 +6,7 @@ from ai_mate_tests.pages.popup_page import PopupPage  # 引入弹窗处理类
 
 def test_open_bluetooth(settings_driver):
     """
-    打开设置 → 进入蓝牙 → 进行 5 次开关蓝牙稳定性测试
+    打开设置 → 进入蓝牙 → 进行 1 次开关蓝牙稳定性测试
 
     测试过程中自动处理可能出现的干扰弹窗
     """

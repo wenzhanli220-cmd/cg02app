@@ -1,0 +1,10 @@
+设备 device1: 检测到干扰弹窗，使用坐标点击 (951, 1012) 关闭
+设备 device1: 欢迎流程完成
+设备 device1: 处理干扰弹窗时发生异常: Message: An unknown server-side error occurred while processing the command. Original error: Could not proxy command to remote server. Original error: Error: socket hang up
+Stacktrace:
+UnknownError: An unknown server-side error occurred while processing the command. Original error: Could not proxy command to remote server. Original error: Error: socket hang up
+    at JWProxy.command (C:\Program Files\Appium\resources\app\node_modules\appium\node_modules\appium-base-driver\lib\jsonwp-proxy\proxy.js:261:13)
+设备 device1: 搜索设备失败: Message: An unknown server-side error occurred while processing the command. Original error: Could not proxy command to remote server. Original error: Error: socket hang up
+Stacktrace:
+UnknownError: An unknown server-side error occurred while processing the command. Original error: Could not proxy command to remote server. Original error: Error: socket hang up
+    at JWProxy.command (C:\Program Files\Appium\resources\app\node_modules\appium\node_modules\appium-base-driver\lib\jsonwp-proxy\proxy.js:261:13)
