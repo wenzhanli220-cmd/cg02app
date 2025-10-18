@@ -1,17 +1,16 @@
-from appium.webdriver.common.appiumby import AppiumBy
+# pages/popup_page.py
 from appium.webdriver.common.touch_action import TouchAction
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from ai_mate_tests.pages.base_page import BasePage
 
-class PopupPage:
+
+class PopupPage(BasePage):
     """通用干扰弹窗处理（保留坐标点击备选方案）"""
 
-    # 你原来的弹窗定位（示例）
-    POPUP_BUTTON = (AppiumBy.CLASS_NAME, "android.widget.Button")
-
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
         # 保持原来的等待时长默认值，但我们允许通过参数覆盖
         self.wait = WebDriverWait(driver, 10)
 
@@ -23,24 +22,43 @@ class PopupPage:
         """
         try:
             # 尝试根据元素定位弹窗（等待 timeout 秒）
-            element = WebDriverWait(self.driver, timeout).until(
-                EC.presence_of_element_located(self.POPUP_BUTTON)
-            )
+            element = self.find_element_by_config("popup_button", timeout)
 
-            # 如果找到了元素，按你原来的做法使用坐标点击（保证兼容）
-            print("⚠️ 检测到干扰弹窗元素，使用坐标点击尝试关闭 (951, 1012)")
-            try:
-                action = TouchAction(self.driver)
-                action.tap(x=951, y=1012).perform()
-            except Exception as e:
-                # 如果坐标点击也失败，尽量尝试元素本身的 click() 方法作为回退
-                try:
+            if element:
+                # 获取配置中的坐标
+                coords = self.element_manager.config_loader.get_popup_close_coords(self.device_name)
+
+                if coords:
+                    print(f"设备 {self.device_name}: 检测到干扰弹窗，使用坐标点击 ({coords['x']}, {coords['y']}) 关闭")
+                    try:
+                        action = TouchAction(self.driver)
+                        action.tap(x=coords['x'], y=coords['y']).perform()
+                    except Exception as e:
+                        # 如果坐标点击也失败，尽量尝试元素本身的 click() 方法作为回退
+                        try:
+                            element.click()
+                        except Exception:
+                            print(f"设备 {self.device_name}: 坐标点击和 element.click() 均失败: {e}")
+                else:
+                    # 如果没有配置坐标，直接点击元素
                     element.click()
-                except Exception:
-                    print(f"⚠️ 坐标点击和 element.click() 均失败: {e}")
+                    print(f"设备 {self.device_name}: 检测到干扰弹窗，已点击关闭")
 
-            return True
+                return True
 
         except (TimeoutException, NoSuchElementException):
             # 没有弹窗，快速返回 False
+            return False
+        except Exception as e:
+            print(f"设备 {self.device_name}: 处理干扰弹窗时发生异常: {e}")
+            return False
+
+        return False
+
+    def is_popup_displayed(self, timeout=2):
+        """检查是否显示弹窗"""
+        try:
+            return self.is_displayed_by_config("popup_button")
+        except Exception as e:
+            print(f"设备 {self.device_name}: 检查弹窗显示状态失败: {e}")
             return False

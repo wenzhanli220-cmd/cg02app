@@ -1,0 +1,10 @@
+✅ 找到配置文件: C:\Users\536131\Documents\GitHub\cg02app\ai_mate_tests\utils\config.yaml
+✅ 配置文件加载成功: C:\Users\536131\Documents\GitHub\cg02app\ai_mate_tests\utils\config.yaml
+✅ 找到配置文件: C:\Users\536131\Documents\GitHub\cg02app\ai_mate_tests\utils\config.yaml
+✅ 配置文件加载成功: C:\Users\536131\Documents\GitHub\cg02app\ai_mate_tests\utils\config.yaml
+✅ 找到配置文件: C:\Users\536131\Documents\GitHub\cg02app\ai_mate_tests\utils\config.yaml
+✅ 配置文件加载成功: C:\Users\536131\Documents\GitHub\cg02app\ai_mate_tests\utils\config.yaml
+✅ 找到配置文件: C:\Users\536131\Documents\GitHub\cg02app\ai_mate_tests\utils\config.yaml
+✅ 配置文件加载成功: C:\Users\536131\Documents\GitHub\cg02app\ai_mate_tests\utils\config.yaml
+🔄 第 1 次蓝牙开关测试
+设备 device1: 检测到干扰弹窗，使用坐标点击 (951, 1012) 关闭

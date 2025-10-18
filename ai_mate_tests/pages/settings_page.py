@@ -1,28 +1,19 @@
-from appium.webdriver.common.appiumby import AppiumBy
+
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+
 from selenium.common.exceptions import TimeoutException
 import time
 
-# 引入 PopupPage
+# 引入 BasePage 和 PopupPage
+from ai_mate_tests.pages.base_page import BasePage
 from ai_mate_tests.pages.popup_page import PopupPage
 
 
-class SettingsPage:
+class SettingsPage(BasePage):
     """设置 - 蓝牙页面（集成弹窗自动处理 + 高效等待机制）"""
 
-    BLUETOOTH_OPTION = (
-        AppiumBy.XPATH,
-        "//android.widget.TextView[@resource-id='android:id/title' and @text='蓝牙']"
-    )
-    BLUETOOTH_SWITCH = (AppiumBy.CLASS_NAME, "android.widget.Switch")
-    PAIRED_DEVICE_CONNECTED = (
-        AppiumBy.XPATH,
-        "//android.widget.TextView[@resource-id='android:id/summary' and contains(@text,'使用中，电池电量')]"
-    )
-
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
         self.wait = WebDriverWait(driver, 15)
         self.popup = PopupPage(driver)
 
@@ -54,13 +45,13 @@ class SettingsPage:
     def open_bluetooth_settings(self):
         """进入蓝牙设置"""
         self._quick_check_popup(timeout=1.5)
-        self.wait.until(EC.presence_of_element_located(self.BLUETOOTH_OPTION)).click()
+        self.click_by_config("bluetooth_option")
         # 打开蓝牙界面后检查一次弹窗
         self._quick_check_popup(timeout=2)
 
     def get_switch(self):
         """获取蓝牙开关元素"""
-        return self.wait.until(EC.presence_of_element_located(self.BLUETOOTH_SWITCH))
+        return self.find_element_by_config("bluetooth_switch")
 
     def toggle_bluetooth(self, enable: bool):
         """
@@ -84,7 +75,7 @@ class SettingsPage:
     def is_device_connected(self):
         """检测是否有配对设备连接"""
         try:
-            self.wait.until(EC.presence_of_element_located(self.PAIRED_DEVICE_CONNECTED))
+            self.find_element_by_config("paired_device_connected")
             return True
         except TimeoutException:
             return False
