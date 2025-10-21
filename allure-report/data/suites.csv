@@ -1,7 +1,5 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"
-打开设置 → 进入蓝牙 → 进行 5 次开关蓝牙稳定性测试
-
-测试过程中自动处理可能出现的干扰弹窗
-","70160","test_open_bluetooth","ai_mate_tests.testsplan","2025-10-18","passed","2025-10-18","","test_open_bluetooth","",""
-"","16883","test_search_and_pair","ai_mate_tests.testsplan","2025-10-18","passed","2025-10-18","","test_search_and_pair","",""
+"多设备并行配对测试 - xdist 兼容","43544","test_device_pairing_multi_device","ai_mate_tests.testsplan","2025-10-21","broken","2025-10-21","","test_search_and_pair","",""
+"多设备快速配对测试 - xdist 兼容","87014","test_quick_pairing_multi_device","ai_mate_tests.testsplan","2025-10-21","failed","2025-10-21","","test_search_and_pair","",""
+"多设备快速蓝牙测试 - xdist 兼容","40074","test_bluetooth_quick_multi_device","ai_mate_tests.testsplan","2025-10-21","passed","2025-10-21","","test_open_bluetooth","",""
+"多设备并行蓝牙测试 - xdist 兼容","24544","test_bluetooth_stability","ai_mate_tests.testsplan","2025-10-21","passed","2025-10-21","","test_open_bluetooth","",""

@@ -70,10 +70,10 @@ devices:
           value: "//android.widget.TextView[@resource-id='android:id/summary' and contains(@text,'使用中，电池电量')]"
 
   device2:
-    udid: "127.0.0.1:7555"
+    udid: "13826704BL000043"
     appium_server_url: "http://localhost:4725/wd/hub"
     platform_name: "Android"
-    platform_version: "12"
+    platform_version: "15"
     device_name: "device2"
     automation_name: "UiAutomator2"
     uiautomator2_server_launch_timeout: 60000

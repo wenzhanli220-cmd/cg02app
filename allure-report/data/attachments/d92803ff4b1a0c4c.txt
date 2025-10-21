@@ -1,0 +1,7 @@
+📱 检测到 2 台设备: device1, device2
+✅ master - 设备 device1 驱动就绪
+✅ master - 设备 device2 驱动就绪
+✅ device2 - 蓝牙测试通过
+✅ device1 - 蓝牙测试通过
+🎉 所有设备蓝牙测试通过
+🧹 master - 清理所有设备驱动

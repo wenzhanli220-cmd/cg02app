@@ -1,0 +1,11 @@
+✅ master - 设备 device1 驱动就绪
+✅ master - 设备 device2 驱动就绪
+❌ device2 - 配对失败: Message: An element could not be located on the page using the given search parameters.; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+Stacktrace:
+NoSuchElementError: An element could not be located on the page using the given search parameters.
+    at AndroidUiautomator2Driver.findElOrEls (C:\Program Files\Appium\resources\app\node_modules\appium\node_modules\appium-android-driver\lib\commands\find.js:75:11)
+❌ device1 - 配对失败: Message: An element could not be located on the page using the given search parameters.; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+Stacktrace:
+NoSuchElementError: An element could not be located on the page using the given search parameters.
+    at AndroidUiautomator2Driver.findElOrEls (C:\Program Files\Appium\resources\app\node_modules\appium\node_modules\appium-android-driver\lib\commands\find.js:75:11)
+🧹 master - 清理所有设备驱动

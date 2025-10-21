@@ -1,0 +1,4 @@
+设备 device2 测试失败: Message: An element could not be located on the page using the given search parameters.; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+Stacktrace:
+NoSuchElementError: An element could not be located on the page using the given search parameters.
+    at AndroidUiautomator2Driver.findElOrEls (C:\Program Files\Appium\resources\app\node_modules\appium\node_modules\appium-android-driver\lib\commands\find.js:75:11)
