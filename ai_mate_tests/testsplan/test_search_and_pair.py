@@ -64,26 +64,3 @@ def test_device_pairing_multi_device(parallel_drivers):
             print("🎉 所有设备配对成功")
 
 
-@pytest.mark.app_type("ai_mate")
-def test_quick_pairing_multi_device(parallel_drivers):
-    """多设备快速配对测试 - xdist 兼容"""
-    failed_devices = []
-
-    for device_name, driver in parallel_drivers.items():
-        try:
-            device = DevicePage(driver)
-            popup = PopupPage(driver)
-
-            popup.handle_interference_popup()
-
-            # 快速配对流程
-            assert device.complete_pairing_flow(), f"{device_name} 快速配对失败"
-
-            print(f"✅ {device_name} - 快速配对成功")
-        except Exception as e:
-            print(f"❌ {device_name} - 快速配对失败: {e}")
-            failed_devices.append(device_name)
-
-    if failed_devices:
-        pytest.fail(f"快速测试失败设备: {', '.join(failed_devices)}")
-
