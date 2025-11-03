@@ -1,5 +1,0 @@
-✅ master - 设备 device1 驱动就绪
-✅ master - 设备 device2 驱动就绪
-✅ device1 - 快速测试通过
-✅ device2 - 快速测试通过
-🧹 master - 清理所有设备驱动

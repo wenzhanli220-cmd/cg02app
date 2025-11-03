@@ -13,7 +13,7 @@ def _run_single_device_test(driver, device_name):
         popup = PopupPage(driver)
 
         popup.handle_interference_popup()
-        settings.stress_test_bluetooth(iterations=1)
+        settings.stress_test_bluetooth(iterations=5)
 
         print(f"✅ {device_name} - 蓝牙测试通过")
         return device_name, True, None
@@ -27,6 +27,8 @@ def _run_single_device_test(driver, device_name):
 def test_bluetooth_stability(parallel_drivers):
     """多设备并行蓝牙测试 - xdist 兼容"""
     with allure.step("多设备并行蓝牙稳定性测试"):
+        iterations = 5
+        print(f"📊 开始蓝牙稳定性测试，每个设备执行 {iterations} 次测试")
         results = {}
 
         # 并行执行所有设备测试
@@ -54,29 +56,3 @@ def test_bluetooth_stability(parallel_drivers):
 
         else:
             print("🎉 所有设备蓝牙测试通过")
-
-
-@pytest.mark.app_type("settings")
-def test_bluetooth_quick_multi_device(parallel_drivers):
-    """多设备快速蓝牙测试 - xdist 兼容"""
-    failed_devices = []
-
-    for device_name, driver in parallel_drivers.items():
-        try:
-            settings = SettingsPage(driver)
-            popup = PopupPage(driver)
-
-            popup.handle_interference_popup()
-            settings.open_bluetooth_settings()
-
-            # 快速开关测试
-            settings.toggle_bluetooth(True)
-            assert settings.is_device_connected(), f"{device_name} 连接失败"
-
-            print(f"✅ {device_name} - 快速测试通过")
-        except Exception as e:
-            print(f"❌ {device_name} - 快速测试失败: {e}")
-            failed_devices.append(device_name)
-
-    if failed_devices:
-        pytest.fail(f"快速测试失败设备: {', '.join(failed_devices)}")

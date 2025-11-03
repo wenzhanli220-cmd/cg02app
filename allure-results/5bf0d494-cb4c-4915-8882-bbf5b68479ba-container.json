@@ -1,1 +1,0 @@
-{"uuid": "a6ddb310-bbe0-4873-a983-62611ea03715", "children": ["cf5e30fd-2776-4534-b018-51fc12df5036", "1592bb05-fc8e-48cf-a5da-fb1fbb4df63b", "5b0ab89c-03dd-4dd7-966f-aee11a50a3d9", "77421ab3-0a56-4661-ab32-03eb727449fd"], "befores": [{"name": "device_manager", "status": "passed", "start": 1761013516388, "stop": 1761013516389}], "start": 1761013516388, "stop": 1761013723526}
