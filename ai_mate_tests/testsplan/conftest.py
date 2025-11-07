@@ -3,9 +3,9 @@ import pytest
 import allure
 import time
 
-from ai_mate_tests.utils.parallel_driver_manager import EnhancedParallelDriverManager
+from ai_mate_tests.utils.parallel_driver_manager import ParallelDriverManager
 
-parallel_driver_manager = EnhancedParallelDriverManager()
+parallel_driver_manager = ParallelDriverManager()
 
 def pytest_configure(config):
     """pytest 配置 - xdist 支持"""

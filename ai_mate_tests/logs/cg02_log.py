@@ -35,7 +35,7 @@ def log_serial(port, name):
 if __name__ == "__main__":
     # 开两个线程分别监听 COM12 和 COM13
     t1 = threading.Thread(target=log_serial, args=("COM12", "left_leg"))
-    t2 = threading.Thread(target=log_serial, args=("COM13", "right_leg"))
+    t2 = threading.Thread(target=log_serial, args=("COM11", "right_leg"))
 
     t1.start()
     t2.start()

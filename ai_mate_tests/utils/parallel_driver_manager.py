@@ -7,7 +7,7 @@ from ai_mate_tests.utils.driver_factory import DriverFactory
 from ai_mate_tests.utils.element_manager import ElementManager
 
 
-class EnhancedParallelDriverManager:
+class ParallelDriverManager:
     def __init__(self):
         self.driver_factory = DriverFactory()
         self.drivers: Dict[str, webdriver.Remote] = {}
