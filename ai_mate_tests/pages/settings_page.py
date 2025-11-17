@@ -33,16 +33,21 @@ class SettingsPage(BasePage):
             return False
 
     def stress_test_bluetooth(self, iterations=50):
-        """蓝牙稳定性测试"""
+        """蓝牙稳定性测试 - 优化版"""
         self.open_bluetooth_settings()
-
+        
         for i in range(1, iterations + 1):
+            # 开启蓝牙
             self.toggle_bluetooth(True)
             if not self.is_device_connected():
                 raise AssertionError(f"第 {i} 次失败：设备未连接")
-
+            
+            # 关闭再开启蓝牙
             self.toggle_bluetooth(False)
+            time.sleep(0.2)  # 短暂等待，避免操作过快
             self.toggle_bluetooth(True)
-
+            
+            # 等待设备重新连接
+            time.sleep(0.5)  # 增加等待时间，确保设备重新连接
             if not self.is_device_connected():
                 raise AssertionError(f"第 {i} 次失败：重新打开后未连接")

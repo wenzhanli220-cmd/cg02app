@@ -4,9 +4,26 @@ import os
 from typing import Dict, Any, List, Optional
 from appium.webdriver.common.appiumby import AppiumBy
 
+# 导入端口管理工具
+try:
+    from ai_mate_tests.utils.port_manager import port_manager
+except ImportError:
+    # 如果导入失败，创建一个空的 port_manager 对象（向后兼容）
+    port_manager = None
+    print("⚠️ 警告: 无法导入 port_manager，将使用配置中的固定端口")
+
 
 class ConfigLoader:
-    def __init__(self, config_path: str = None):
+    def __init__(self, config_path: str = None, auto_allocate_ports: bool = True, 
+                 only_allocated_connected_devices: bool = False):
+        """
+        初始化配置加载器
+        :param config_path: 配置文件路径
+        :param auto_allocate_ports: 是否自动分配空闲端口，默认 True
+        :param only_allocated_connected_devices: 是否只为首选连接的设备分配端口，默认 False
+                                                True: 只为首选连接的设备分配端口（通过 adb devices 检测）
+                                                False: 为配置文件中所有设备分配端口
+        """
         # 如果没有指定路径，尝试多个可能的位置
         if config_path is None:
             # 尝试从项目根目录开始查找
@@ -31,6 +48,12 @@ class ConfigLoader:
             self.config_path = config_path
 
         self.config = self._load_config()
+        self.auto_allocate_ports = auto_allocate_ports and port_manager is not None
+        self.only_allocated_connected_devices = only_allocated_connected_devices
+        
+        # 如果启用自动分配端口，初始化时自动分配
+        if self.auto_allocate_ports:
+            self._auto_allocate_ports_on_init()
 
     def _load_config(self) -> Dict[str, Any]:
         """加载YAML配置文件"""
@@ -108,7 +131,36 @@ class ConfigLoader:
         return components[0] + ''.join(x.title() for x in components[1:])
 
     def get_appium_server_url(self, device_name: str) -> str:
-        """获取指定设备的Appium服务器URL"""
+        """
+        获取指定设备的Appium服务器URL
+        如果启用了自动分配端口，会自动检测端口是否可用，不可用时自动分配空闲端口
+        """
+        # 如果启用了自动分配端口，使用端口管理器
+        if self.auto_allocate_ports:
+            try:
+                # 尝试从端口管理器获取已分配的端口
+                allocated_urls = port_manager.get_allocated_urls()
+                if device_name in allocated_urls:
+                    return allocated_urls[device_name]
+                
+                # 如果没有分配，获取首选 URL 并自动分配
+                preferred_url = None
+                device_config = self.get_device_config(device_name)
+                if 'appium_server_url' in device_config:
+                    preferred_url = device_config['appium_server_url']
+                else:
+                    appium_servers = self.get_appium_servers()
+                    if device_name in appium_servers:
+                        preferred_url = appium_servers[device_name]
+                
+                # 自动分配端口
+                url, port = port_manager.allocate_port_for_device(device_name, preferred_url)
+                print(f"✅ 为设备 {device_name} 自动分配端口 {port}，URL: {url}")
+                return url
+            except Exception as e:
+                print(f"⚠️ 自动分配端口失败: {e}，使用配置中的端口")
+        
+        # 如果未启用自动分配或分配失败，使用原有逻辑
         # 首先检查设备配置中是否有独立的appium_server_url
         device_config = self.get_device_config(device_name)
         if 'appium_server_url' in device_config:
@@ -121,6 +173,108 @@ class ConfigLoader:
 
         # 如果都没有配置，使用默认值
         return 'http://localhost:4723/wd/hub'
+    
+    def _get_connected_device_udids(self) -> List[str]:
+        """
+        检测实际连接的设备 UDID 列表
+        :return: 连接的设备 UDID 列表
+        """
+        try:
+            import subprocess
+            result = subprocess.run(
+                ['adb', 'devices'],
+                capture_output=True,
+                text=True,
+                timeout=10
+            )
+            
+            udids = []
+            lines = result.stdout.strip().split('\n')[1:]
+            for line in lines:
+                if line.strip() and 'device' in line:
+                    device_id = line.split('\t')[0].strip()
+                    if device_id:
+                        udids.append(device_id)
+            return udids
+        except Exception as e:
+            print(f"⚠️ 检测连接设备失败: {e}")
+            return []
+    
+    def _get_device_names_by_udids(self, udids: List[str]) -> List[str]:
+        """
+        根据 UDID 列表获取配置文件中对应的设备名称列表
+        :param udids: UDID 列表
+        :return: 设备名称列表
+        """
+        device_names = []
+        for udid in udids:
+            # 在配置文件中查找匹配的设备
+            all_devices = self.get_all_devices()
+            for device_name in all_devices:
+                try:
+                    device_config = self.get_device_config(device_name)
+                    if device_config.get('udid') == udid:
+                        device_names.append(device_name)
+                        break
+                except:
+                    continue
+        return device_names
+    
+    def _auto_allocate_ports_on_init(self):
+        """初始化时自动为设备分配端口"""
+        if not self.auto_allocate_ports:
+            return
+        
+        try:
+            # 如果设置了只为首选连接的设备分配端口，则检测实际连接的设备
+            if self.only_allocated_connected_devices:
+                print("🔍 检测实际连接的设备...")
+                connected_udids = self._get_connected_device_udids()
+                print(f"   实际连接 {len(connected_udids)} 台设备: {connected_udids}")
+                
+                if not connected_udids:
+                    print("   ⚠️ 未检测到连接的设备，不分配端口")
+                    return
+                
+                # 根据 UDID 获取配置文件中对应的设备名称
+                device_names = self._get_device_names_by_udids(connected_udids)
+                if not device_names:
+                    print("   ⚠️ 连接的设备在配置文件中未找到对应配置，不分配端口")
+                    return
+                else:
+                    print(f"   匹配到 {len(device_names)} 个配置设备: {device_names}")
+            else:
+                # 使用配置文件中的所有设备
+                device_names = self.get_all_devices()
+                if not device_names:
+                    return
+            
+            # 收集首选 URL
+            preferred_urls = {}
+            for device_name in device_names:
+                try:
+                    device_config = self.get_device_config(device_name)
+                    if 'appium_server_url' in device_config:
+                        preferred_urls[device_name] = device_config['appium_server_url']
+                    else:
+                        appium_servers = self.get_appium_servers()
+                        if device_name in appium_servers:
+                            preferred_urls[device_name] = appium_servers[device_name]
+                except Exception as e:
+                    print(f"⚠️ 获取设备 {device_name} 的首选 URL 失败: {e}")
+            
+            # 批量分配端口
+            print(f"🔍 正在为 {len(device_names)} 个设备自动分配空闲端口...")
+            allocated_urls = port_manager.allocate_ports_for_devices(device_names, preferred_urls)
+            
+            # 打印分配结果
+            print("\n📋 端口分配结果:")
+            for device_name, url in allocated_urls.items():
+                port = port_manager.extract_port_from_url(url)
+                print(f"  {device_name}: {url} (端口: {port})")
+            print()
+        except Exception as e:
+            print(f"⚠️ 初始化时自动分配端口失败: {e}，将在获取端口时动态分配")
 
     def get_device_elements(self, device_name: str) -> Dict[str, Any]:
         """获取指定设备的所有元素配置"""

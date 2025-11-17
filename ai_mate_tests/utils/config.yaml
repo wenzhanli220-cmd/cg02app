@@ -1,15 +1,16 @@
 # utils/config.yaml
 
-# Appium 服务配置
+# Appium 服务配置（可选：作为首选端口，系统会自动检测并分配空闲端口）
+# 如果端口上有 Appium server，会优先使用；如果没有，会自动分配空闲端口
 appium_servers:
-  device1: "http://localhost:4723/wd/hub"
-  device2: "http://localhost:4725/wd/hub"
+  device1: "http://localhost:4723/wd/hub"  # 首选端口，自动检测是否可用
+  device2: "http://localhost:4725/wd/hub"  # 首选端口，自动检测是否可用
 
 # 设备配置（每个设备包含自己的元素定位）
 devices:
   device1:
     udid: "11467253AU000413"
-    appium_server_url: "http://localhost:4723/wd/hub"
+    # appium_server_url: 可选，作为首选端口（优先使用，系统会自动检测并分配）
     platform_name: "Android"
     platform_version: "15"
     device_name: "device1"
@@ -71,7 +72,7 @@ devices:
 
   device2:
     udid: "13826704BL000043"
-    appium_server_url: "http://localhost:4725/wd/hub"
+    # appium_server_url: 可选，作为首选端口（优先使用，系统会自动检测并分配）
     platform_name: "Android"
     platform_version: "15"
     device_name: "device2"
