@@ -1,4 +1,5 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"多设备并行蓝牙测试 - xdist 兼容","25977","test_bluetooth_stability","ai_mate_tests.testsplan","2025-10-31","passed","2025-10-31","","test_open_bluetooth","",""
-"多设备并行配对测试 - xdist 兼容","32289","test_device_pairing_multi_device","ai_mate_tests.testsplan","2025-10-31","broken","2025-10-31","","test_search_and_pair","",""
-"多设备快速配对测试 - xdist 兼容","65234","test_quick_pairing_multi_device","ai_mate_tests.testsplan","2025-10-31","failed","2025-10-31","","test_search_and_pair","",""
+"多设备并行配对测试 - 优化版","30384","test_device_pairing_multi_device","","2025-11-18","failed","2025-11-18","","test_search_and_pair","",""
+"多设备并行蓝牙测试 - 优化版","48891","test_bluetooth_stability","ai_mate_tests.testsplan","2025-11-18","passed","2025-11-18","","test_open_bluetooth","",""
+"多设备并行蓝牙测试 - 优化版","50325","test_bluetooth_stability","","2025-11-18","passed","2025-11-18","","test_open_bluetooth","",""
+"多设备并行配对测试 - 优化版","30414","test_device_pairing_multi_device","ai_mate_tests.testsplan","2025-11-18","failed","2025-11-18","","test_search_and_pair","",""

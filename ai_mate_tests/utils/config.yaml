@@ -71,7 +71,7 @@ devices:
           value: "//android.widget.TextView[@resource-id='android:id/summary' and contains(@text,'使用中，电池电量')]"
 
   device2:
-    udid: "13826704BL000043"
+    udid: "13554704AE000131"
     # appium_server_url: 可选，作为首选端口（优先使用，系统会自动检测并分配）
     platform_name: "Android"
     platform_version: "15"

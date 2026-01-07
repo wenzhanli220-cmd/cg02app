@@ -33,7 +33,7 @@ class SettingsPage(BasePage):
             return False
 
     def stress_test_bluetooth(self, iterations=50):
-        """蓝牙稳定性测试 - 优化版"""
+        """蓝牙稳定性测试"""
         self.open_bluetooth_settings()
         
         for i in range(1, iterations + 1):

@@ -1,0 +1,2 @@
+INFO     ai_mate_tests.utils.driver_factory:driver_factory.py:112 创建 device1 的 settings 应用driver
+INFO     ai_mate_tests.utils.driver_factory:driver_factory.py:142 ✅ 成功创建 device1 的 settings 应用driver
